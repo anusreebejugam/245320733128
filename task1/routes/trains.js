@@ -10,9 +10,10 @@ router.get('/', async function (req, res, next) {
       Authorization: `Bearer ${token}`
     }
   }).then(res => res.body)
-  const data = await response.getReader().read()
-  console.log(data);
-  res.send(data)
+  for await (const chunk of response) {
+    res.write(chunk)
+  }
+  res.end()
 });
 
 module.exports = router;
