@@ -1,17 +1,16 @@
 const express = require('express');
 const router = express.Router();
-const getJWT = require('../util/getJWT')
+const getJWT = require('../util/getJWT');
 
-/* GET users listing. */
 router.get('/', async function (req, res, next) {
-  const token = getJWT()
-  console.log(token);
-  const getResponse = await fetch('http://20.244.56.144/train/trains', {
+  const token = await getJWT()
+  const response = await fetch('http://20.244.56.144/train/trains', {
     headers: {
       Authorization: `Bearer ${token}`
     }
   })
-  res.send(getResponse)
+  console.log(response);
+  res.send(response)
 });
 
 module.exports = router;
